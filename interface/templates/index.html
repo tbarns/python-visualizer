@@ -10,6 +10,13 @@
   </head>
   <body>
     <div id="visualizer"></div>
+    <button id="redButton">Red</button>
+    <button id="greenButton">Green</button>
+    <button id="blueButton">Blue</button>
+    <label for="xSpeed">X-axis Speed:</label>
+    <input type="range" id="xSpeed" min="0" max="0.1" step="0.01" value="0.01">
+    <label for="ySpeed">Y-axis Speed:</label>
+    <input type="range" id="ySpeed" min="0" max="0.1" step="0.01" value="0.01">
     <script>
       // Three.js code to create a scene, camera, renderer, and a rotating cube
       const scene = new THREE.Scene();
@@ -30,12 +37,28 @@
 
       camera.position.z = 5;
 
+      document.getElementById('redButton').addEventListener('click', function() {
+        cube.material.color.set(0xff0000);
+      });
+      document.getElementById('greenButton').addEventListener('click', function() {
+        cube.material.color.set(0x00ff00);
+      });
+      document.getElementById('blueButton').addEventListener('click', function() {
+        cube.material.color.set(0x0000ff);
+      });
+
+      // Animate function
       function animate() {
         requestAnimationFrame(animate);
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
+        const xSpeed = parseFloat(document.getElementById('xSpeed').value);
+        const ySpeed = parseFloat(document.getElementById('ySpeed').value);
+
+        cube.rotation.x += xSpeed;
+        cube.rotation.y += ySpeed;
+
         renderer.render(scene, camera);
       }
+
 
       animate();
     </script>
